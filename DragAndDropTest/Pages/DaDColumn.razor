@@ -1,0 +1,42 @@
+﻿
+    <div class="column" ondragover="event.preventDefault();"
+        ondragstart="event.dataTransfer.setData('', event.target.id);"
+        @ondrop="Drop">
+        @foreach (var item in Objects)
+       {
+           <div draggable="true" class="card m-3" @ondragstart="@(() => DragStart(item))">
+            <h4>@item.Label</h4>
+        </div>
+       }
+    </div>
+    <style>
+    .column{
+        width:250px;
+        padding-left:30px;
+        padding-right:30px;
+        height:70vh;
+        border:solid 1px black;
+    }
+</style>
+@code {
+    [CascadingParameter]
+    public Container Container { get; set; }
+    [Parameter]
+    public int Number { get; set; }
+
+    List<DragAndDropModel> Objects = new List<DragAndDropModel>();
+    protected override void OnParametersSet()
+    {
+        Objects.Clear();
+        Objects.AddRange(Container.DragAndDropModels.Where(x => x.Number == Number));
+        base.OnParametersSet();
+    }
+    private void DragStart(DragAndDropModel selected)
+    {
+        Container.OnDrag = selected;
+    }
+    private async Task Drop()
+    {
+        Container.Update(Number);
+    }
+}

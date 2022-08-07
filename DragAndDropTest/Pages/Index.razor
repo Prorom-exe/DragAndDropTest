@@ -1,0 +1,22 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+<Container DragAndDropModels="model">
+    <DaDColumn Number="1"/>
+    <DaDColumn Number="2"/>
+    <DaDColumn Number="3"/>
+</Container>
+
+
+
+@code{
+    List<DragAndDropModel> model = new List<DragAndDropModel>();
+    protected override void OnInitialized()
+    {
+        model.Add(new DragAndDropModel {Id = 1,Label = "Hello", Number = 1 });
+        model.Add(new DragAndDropModel { Id = 2, Label = "Say", Number = 2 });
+        model.Add(new DragAndDropModel {Id = 3, Label = "Good", Number = 3 });
+        model.Add(new DragAndDropModel {Id = 4, Label = "EYE", Number = 1 });
+        base.OnInitialized();
+    }
+}
